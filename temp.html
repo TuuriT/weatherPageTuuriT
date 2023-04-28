@@ -21,7 +21,7 @@
             <div class="navbar-nav">
               <a class="nav-link" onclick="location.href='./index.html';">Last 50 Readings</a>
               <a class="nav-link active" aria-current="page" href="#">Temperature</a>
-              <a class="nav-link" onclick="location.href='./last20windspd.html';">Wind speed</a>
+              <a class="nav-link" onclick="location.href='./windspd.html';">Wind speed</a>
             </div>
           </div>
         </div>
@@ -49,6 +49,14 @@
           <input type="range" class="form-range" min="0" max="5">
           <div>
             <canvas></canvas>
+          </div>
+          <div>
+            <h2>STATISTICAL INFORMATION</h2>
+            <p id="mean"><strong>(SHOW BY SLIDING THE THUMB)</strong></p>
+            <p id="median"></p>
+            <p id="mode"></p>
+            <p id="range"></p>
+            <p id="standard-deviation"></p>
           </div>
         </div>
     </div>

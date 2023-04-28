@@ -20,6 +20,7 @@ function fetchData() {
       data = response;
       createTable();
       createChart(data);
+      calculateStats(data);
     });
 }
 
@@ -103,4 +104,50 @@ function createChart(item){
             }  
        });
   }
+}
+function calculateStats(data) {
+  const stringWindspd = data.map((item) => item.wind_speed);
+  const floatWindspd=[];
+  for (let i = 0; i < stringWindspd.length; i++) { 
+    floatWindspd.push(parseFloat(stringWindspd[i]));
+  }
+
+  
+  const mean = floatWindspd.reduce((a, b) => a + b, 0) / floatWindspd.length;
+
+ 
+  const sortedWindspd = [...floatWindspd].sort();
+  const middleIndex = Math.floor(sortedWindspd.length / 2);
+  const median =
+    sortedWindspd.length % 2 === 0
+      ? (sortedWindspd[middleIndex] +
+          sortedWindspd[middleIndex - 1]) /
+        2
+      : sortedWindspd[middleIndex];
+
+  const counts = {};
+  let mode = null;
+  let maxCount = 0;
+  for (const windspd of sortedWindspd) {
+    counts[windspd] = (counts[windspd] || 0) + 1;
+    if (counts[windspd] > maxCount) {
+      mode = windspd;
+      maxCount = counts[windspd];
+    }
+  }
+
+  
+  const range = Math.max(...floatWindspd) - Math.min(...floatWindspd);
+  
+  const meanDifferenceSquared = floatWindspd.map((winds) => (winds - mean) ** 2);
+  const variance =
+    meanDifferenceSquared.reduce((a, b) => a + b, 0) / meanDifferenceSquared.length;
+  const standardDeviation = Math.sqrt(variance);
+
+   
+    document.getElementById("mean").innerHTML="Mean: <strong>"+mean.toFixed(2)+"</strong>";
+    document.getElementById("median").innerHTML="Median: <strong>"+median.toFixed(2)+"</strong>";
+    document.getElementById("mode").innerHTML="Mode: <strong>"+mode+"</strong>";
+    document.getElementById("range").innerHTML="Range: <strong>"+range.toFixed(2)+"</strong>";
+    document.getElementById("standard-deviation").innerHTML="Standard Deviation: <strong>"+standardDeviation.toFixed(2)+"</strong>";
 }

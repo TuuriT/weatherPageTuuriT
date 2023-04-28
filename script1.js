@@ -1,5 +1,5 @@
 // FOR last50.html
-
+//this code is heavily influenced from the GoT - API challenge.
 createTableItem = (item) => {
     let tableItem = document.createElement('tr');
     tableItem.className = 'table-record';
